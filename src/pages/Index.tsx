@@ -52,9 +52,9 @@ const films = [
     id: 1,
     title: "Фиксики против кработов",
     year: 2019,
-    age: "0+",
-    duration: "77 мин",
-    genre: "Анимация, Приключения",
+    age: "6+",
+    duration: "80 мин",
+    genre: "Анимация, Музыка, Россия",
     description:
       "Фиксики снова в деле! На этот раз маленьким героям предстоит сразиться с загадочными кработами — роботами-крабами, захватившими дом. Весёлое и захватывающее приключение для всей семьи.",
     poster: FIXIKI_IMG,
@@ -67,8 +67,8 @@ const films = [
     title: "Смешарики. Начало",
     year: 2011,
     age: "0+",
-    duration: "60 мин",
-    genre: "Анимация, Семейный",
+    duration: "86 мин",
+    genre: "Анимация, Комедия, Россия",
     description:
       "История о том, как появился удивительный мир Смешариков. Круглые и добрые герои раскрывают секреты своей дружбы и рассказывают о самом начале своих приключений.",
     poster: SMESHARIKI_IMG,
@@ -242,8 +242,8 @@ export default function Index() {
                 <div>
                   <p className="font-display text-xl font-semibold tracking-wide">Фиксики против кработов</p>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="age-badge">0+</span>
-                    <span className="text-muted-foreground text-sm font-body">2019 · 77 мин · Анимация</span>
+                    <span className="age-badge">6+</span>
+                    <span className="text-muted-foreground text-sm font-body">2019 · 80 мин · Анимация</span>
                   </div>
                 </div>
               </div>
@@ -267,7 +267,7 @@ export default function Index() {
                   <p className="font-display text-xl font-semibold tracking-wide">Смешарики. Начало</p>
                   <div className="flex items-center gap-2 mt-1">
                     <span className="age-badge">0+</span>
-                    <span className="text-muted-foreground text-sm font-body">2011 · 60 мин · Анимация</span>
+                    <span className="text-muted-foreground text-sm font-body">2011 · 86 мин · Анимация</span>
                   </div>
                 </div>
               </div>
