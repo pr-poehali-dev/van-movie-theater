@@ -1,5 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
+
+function useNow() {
+  const [now, setNow] = useState(new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(t);
+  }, []);
+  return now;
+}
+
+function getStatus(now: Date) {
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const total = h * 60 + m;
+  const open = 10 * 60;
+  const close = 23 * 60;
+  const isOpen = total >= open && total < close;
+
+  const todaySession = 18 * 60;
+  const tomorrowSession = 18 * 60;
+
+  let nextLabel = "";
+  if (isOpen) {
+    if (total < todaySession) {
+      const diff = todaySession - total;
+      nextLabel = `Сеанс через ${diff >= 60 ? Math.floor(diff / 60) + " ч " : ""}${diff % 60 > 0 ? (diff % 60) + " мин" : ""}`;
+    } else if (total < tomorrowSession + 60) {
+      nextLabel = "Сеанс идёт сейчас";
+    } else {
+      nextLabel = "Следующий сеанс завтра в 18:00";
+    }
+  } else if (total < open) {
+    const diff = open - total;
+    nextLabel = `Откроется через ${diff >= 60 ? Math.floor(diff / 60) + " ч " : ""}${diff % 60 > 0 ? (diff % 60) + " мин" : ""}`;
+  } else {
+    nextLabel = "Откроется завтра в 10:00";
+  }
+
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+  return { isOpen, nextLabel, timeStr };
+}
 
 const FIXIKI_IMG = "https://cdn.poehali.dev/projects/6c1b7431-f2a4-40eb-9d1f-2a5c16c8780e/files/25f6e1d9-11cf-4d79-bc7e-2046d882b430.jpg";
 const SMESHARIKI_IMG = "https://cdn.poehali.dev/projects/6c1b7431-f2a4-40eb-9d1f-2a5c16c8780e/files/2d2284ca-27b0-40eb-8582-fe41cd36d61b.jpg";
@@ -40,6 +83,8 @@ const sections = ["Главная", "Расписание", "Фильмы", "О 
 export default function Index() {
   const [activeSection, setActiveSection] = useState("Главная");
   const [menuOpen, setMenuOpen] = useState(false);
+  const now = useNow();
+  const { isOpen, nextLabel, timeStr } = getStatus(now);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -118,9 +163,15 @@ export default function Index() {
 
         <div className="relative max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold text-xs font-body font-medium px-3 py-1.5 rounded-full mb-6 animate-fade-in">
-              <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-              Открыто сегодня
+            <div className={`inline-flex items-center gap-2 border text-xs font-body font-medium px-3 py-1.5 rounded-full mb-3 animate-fade-in ${isOpen ? "bg-gold/10 border-gold/30 text-gold" : "bg-red-500/10 border-red-500/30 text-red-400"}`}>
+              <span className={`w-2 h-2 rounded-full ${isOpen ? "bg-gold animate-pulse" : "bg-red-400"}`} />
+              {isOpen ? "Открыто сейчас" : "Закрыто"}
+              <span className="opacity-60">· {timeStr}</span>
+            </div>
+
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 text-muted-foreground text-xs font-body px-3 py-1.5 rounded-full mb-6 animate-fade-in">
+              <Icon name="Clock3" size={12} />
+              {nextLabel}
             </div>
 
             <h1 className="font-display text-5xl md:text-7xl font-bold leading-none tracking-tight mb-6 animate-fade-up">
@@ -130,8 +181,9 @@ export default function Index() {
             </h1>
 
             <p className="font-body text-muted-foreground text-lg leading-relaxed mb-8 animate-fade-up-delay-1">
-              Кинотеатр Вани уже открыт сегодня для вас. Смотрите любимые
-              фильмы в тёплой атмосфере нашего кинотеатра.
+              {isOpen
+                ? "Кинотеатр Вани открыт для вас. Смотрите любимые фильмы в тёплой атмосфере нашего кинотеатра."
+                : "Кинотеатр сейчас закрыт. Ждём вас ежедневно с 10:00 до 23:00."}
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-up-delay-2">
@@ -339,8 +391,11 @@ export default function Index() {
                   </div>
                   <div>
                     <p className="font-body text-sm text-muted-foreground mb-1">Режим работы</p>
-                    <p className="font-body font-medium">Пн – Вс, ежедневно</p>
-                    <p className="font-body text-muted-foreground text-sm">10:00 – 23:00</p>
+                    <p className="font-body font-medium">Пн – Вс, ежедневно · 10:00 – 23:00</p>
+                    <span className={`inline-flex items-center gap-1.5 mt-1 text-xs font-body font-medium px-2 py-0.5 rounded-full ${isOpen ? "bg-gold/10 text-gold" : "bg-red-500/10 text-red-400"}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${isOpen ? "bg-gold animate-pulse" : "bg-red-400"}`} />
+                      {isOpen ? `Открыто · ${timeStr}` : `Закрыто · ${timeStr}`}
+                    </span>
                   </div>
                 </div>
               </div>
