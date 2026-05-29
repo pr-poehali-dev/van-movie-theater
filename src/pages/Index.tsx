@@ -66,7 +66,7 @@ const films = [
     id: 2,
     title: "Смешарики. Начало",
     year: 2011,
-    age: "6+",
+    age: "0+",
     duration: "60 мин",
     genre: "Анимация, Семейный",
     description:
