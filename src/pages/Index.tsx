@@ -266,7 +266,7 @@ export default function Index() {
                 <div>
                   <p className="font-display text-xl font-semibold tracking-wide">Смешарики. Начало</p>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="age-badge">6+</span>
+                    <span className="age-badge">0+</span>
                     <span className="text-muted-foreground text-sm font-body">2011 · 60 мин · Анимация</span>
                   </div>
                 </div>
