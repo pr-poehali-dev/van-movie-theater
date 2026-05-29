@@ -44,8 +44,8 @@ function getStatus(now: Date) {
   return { isOpen, nextLabel, timeStr };
 }
 
-const FIXIKI_IMG = "https://cdn.poehali.dev/projects/6c1b7431-f2a4-40eb-9d1f-2a5c16c8780e/files/25f6e1d9-11cf-4d79-bc7e-2046d882b430.jpg";
-const SMESHARIKI_IMG = "https://cdn.poehali.dev/projects/6c1b7431-f2a4-40eb-9d1f-2a5c16c8780e/files/2d2284ca-27b0-40eb-8582-fe41cd36d61b.jpg";
+const FIXIKI_IMG = "https://cdn.poehali.dev/projects/6c1b7431-f2a4-40eb-9d1f-2a5c16c8780e/bucket/8f0c15ed-e452-49b5-af03-02ef5a123a8d.jpg";
+const SMESHARIKI_IMG = "https://cdn.poehali.dev/projects/6c1b7431-f2a4-40eb-9d1f-2a5c16c8780e/bucket/5fd11de8-d597-42f4-9076-b97eb120c6d4.jpg";
 
 const films = [
   {
