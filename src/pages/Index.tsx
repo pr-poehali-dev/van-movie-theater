@@ -339,8 +339,8 @@ export default function Index() {
                   </div>
                   <div>
                     <p className="font-body text-sm text-muted-foreground mb-1">Режим работы</p>
-                    <p className="font-body font-medium">Ежедневно</p>
-                    <p className="font-body text-muted-foreground text-sm">Сеансы по расписанию</p>
+                    <p className="font-body font-medium">Пн – Вс, ежедневно</p>
+                    <p className="font-body text-muted-foreground text-sm">10:00 – 23:00</p>
                   </div>
                 </div>
               </div>
